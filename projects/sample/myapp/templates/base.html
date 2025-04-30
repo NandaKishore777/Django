@@ -1,0 +1,27 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}My Notes{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+        .note-box { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    {% if user.is_authenticated %}
+    <form method="POST" action="{% url 'logout' %}" style="float: right;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+    <p>Welcome, {{ user.username }}!</p>
+{% endif %}
+
+    <h1><a href="/">📝 My Notes App</a></h1>
+    <hr>
+
+    {% block content %}
+    <!-- Child templates will insert content here -->
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}All Notes{% endblock %}
+
+{% block content %}
+<h2>Add a Note</h2>
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="title" placeholder="Title" required><br><br>
+    <textarea name="content" placeholder="Content" required></textarea><br><br>
+    <button type="submit">Add Note</button>
+</form>
+
+<hr>
+
+<h2>All Notes</h2>
+{% for note in notes %}
+    <div class="note-box">
+        <h3>{{ note.title }}</h3>
+        <p>{{ note.content }}</p>
+        <small>{{ note.created_at }}</small><br>
+        <a href="{% url 'edit_note' note.id %}">Edit</a> |
+        <form method="POST" action="{% url 'delete_note' note.id %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+{% empty %}
+    <p>No notes yet.</p>
+{% endfor %}
+{% endblock %}
